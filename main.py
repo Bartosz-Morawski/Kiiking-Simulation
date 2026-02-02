@@ -23,7 +23,7 @@ TODO ask about use of AI for refactoring etc, or is this an absolute ban
 import numpy as np
 import matplotlib.pyplot as plt
 from plotter import *
-t_span = [0,10]
+t_span = (0,10)
 # =============
 #Test section 1: just checking it works
 # =============
@@ -41,19 +41,27 @@ def simple(theta_init=np.pi/4, omega_init=0):
     # Solve the equations
     # I've assigned the solution to var here, but it's also now aaccessible via pendulum.t etc
     # TODO can I make it so that I don't
-    #t, theta, omega = (
-    pendulum.solve(t_span, dt=0.01)
+    t, theta, omega = pendulum.solve()
 
     # Time series plots
     fig1 = plot_motion_2d(pendulum)
+    fig2 = phase_plane_plot(pendulum)
 
 
     # Create animation
 
     anim = animate_pendulum(pendulum)
 
-
     plt.show()
 
+# ==========================================
+# Tests for simple pendulum in basic sits
+# ==========================================
+# 1. release from rest
 simple(theta_init=np.pi/4, omega_init=0)
-simple(theta_init=0, omega_init=3*np.pi)
+# 2. at top of pendulum, no initial velocity
+simple(theta_init=np.pi, omega_init=3)
+# TODO expect this to be stationary, position seems to, but forces are acting up (small errors 1e-9)
+# 3. released at bottom, Stationary as expected,
+#simple(theta_init=0, omega_init=0)
+

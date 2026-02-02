@@ -49,7 +49,11 @@ def plot_motion_2d(pendulum):
     ax = axes[1, 1]
     ax.plot(pendulum.t, KE, 'b-', label='kin')
     ax.plot(pendulum.t, PE, 'r-', label='pot')
-    ax.plot(pendulum.t, total_E, 'k--',label='sum')
+    ax.scatter(pendulum.t, total_E,label='sum')
+
+    b, a = np.polyfit(pendulum.t, total_E, deg=1) #slope and intercept of Total E
+    ax.plot(pendulum.t, b*pendulum.t + a, label=f'fit of total E {b}')
+    ax.set_xlabel('Time (s)')
     ax.set_xlabel('t')
     ax.set_ylabel('J')
     ax.set_title('Energy')
@@ -67,10 +71,31 @@ def plot_motion_2d(pendulum):
     return fig
 
 
-def animate_pendulum(pendulum, interval=20, shadow_frame=50):
+# TODO PHASE Plane Plot
+# Phase Plane Plot
+def phase_plane_plot(pendulum):
+    """
+    Should be the plot of theta vs omega
+    :param pendulum:
+    :return:
+    """
+    _,theta, omega = pendulum.solve()
+
+    fig = plt.figure(figsize = (5,3))
+    plt.plot(theta, omega, 'b-')
+    plt.xlabel('theta')
+    plt.ylabel('omega (dtheta/dt)')
+    return fig
+
+
+# Sanity check animation
+def animate_pendulum(pendulum, interval=10, shadow_frame=50):
     """
     Create animate output  of pendulum.
     blue line
+    interval = 10 millisec - matches dt 0.1, so is in 'realtime'
+    -> this means the shadow frame is last 0.5s
+    TODO add timer in corner of animation pot to have time
     """
     if pendulum.theta is None:
         raise ValueError("Pendulum must be solved before animating!")
@@ -110,7 +135,7 @@ def animate_pendulum(pendulum, interval=20, shadow_frame=50):
 
     def update(frame):
         """frame"""
-        # Update bar position (plot as y, x)
+        # bar plotted y,x
         bar.set_data([0, y[frame]], [0, x[frame]])
 
         # Update previous
@@ -123,7 +148,7 @@ def animate_pendulum(pendulum, interval=20, shadow_frame=50):
                          frames=len(pendulum.t),
                          interval=interval,
                          repeat=True)
-    plt.grid(True)
+    plt.grid(True, alpha=0.3)
 
     return anim
 

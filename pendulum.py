@@ -8,8 +8,7 @@ NB - Gravity acts in the positive x axis to match the assignement doc
 
 """
 import numpy as np
-from scipy.integrate import odeint
-
+from scipy.integrate import odeint, solve_ivp
 
 
 class SimplePendulum:
@@ -23,34 +22,41 @@ class SimplePendulum:
         - Mass doesn't contribute in this direction, so not currently a variable
     """
 
-    def __init__(self,r = 1.0 , g=9.81, theta0=np.pi / 4, omega0=0.0):
+    def __init__(self,r = 1.0 , g=9.81, m=1.0,theta0=np.pi / 4, omega0=1.0):
         """
         Initialize pendulum parameters.
+        Used to define the simple pendulum var with parameters
 
         Parameters:
         -----------
         r : float ( constant )
-            Length of pendulum (meters)
+            Length of pendulum (m)
         g : float
-            Gravitational acceleration (m/s²)
+            Gravitational acceleration (m/s^2)
         theta0 : float
             Initial angle (radians, measured from vertical)
             default = 0.25pi
         omega0 : float
             Initial angular velocity (rad/s)
+            default = 1.0
         """
+
         self.r =r
         self.g = g
+        self.m = m
         self.theta0 = theta0
         self.omega0 = omega0
         self.K = g /r  # Constant from the equation
+        # TODO K will no longer be constant once we complicate the model, this needs to be adjusted
 
         # Creates empty var for solution, this is hte info we plot
-        self.t = None
-        self.theta = None
-        self.omega = None
+        self.t = None       # time
+        self.theta = None   # angular displacement
+        self.omega = None   # angular velocity
+        self.alpha = None   # angular acceleration
 
-    def derivatives(self, state, t):
+
+    def derivatives(self,t, state):
         """
         Calculate derivatives for the ODE system.
         Input:
@@ -66,25 +72,44 @@ class SimplePendulum:
 
         return [dtheta_dt, domega_dt]
 
-    def solve(self, t_span, dt=0.01):
+    def solve(self, time_range= (0,10), dt=0.01):
         """
-        Solve the pendulum equations.
+        Solve the pendulum equation as set of 2 first order ODEs
+
+            theta'(t) = omega(t)
+            omega'(t) = -(g/L)*(sin(theta(t)))
 
         Parameters:
         -----------
-        t_span : tuple
+        time_range : tuple
             (t_start, t_end) time span for output data
         dt : float
             Time step for output
+
+        Output:
+            t - time array
+            theta - angle at
         """
-        self.t = np.arange(t_span[0], t_span[1], dt)
+
+        t_eval_points = np.arange(time_range[0], time_range[1], dt)
         initial_state = [self.theta0, self.omega0]
 
         # Solve ODE system
-        solution = odeint(self.derivatives, initial_state, self.t)
+        solution = solve_ivp(
+            self.derivatives,
+            t_span=time_range,
+            y0= initial_state,
+            t_eval=t_eval_points,
+            rtol=1e-5, #added as num error was causing total energy to change in a closed system
+            atol=1e-5
+        )
+        if not solution.success:
+            raise RuntimeError(f"Integration failed")
 
-        self.theta = solution[:, 0]
-        self.omega = solution[:, 1]
+        self.t = solution.t
+        self.theta = solution.y[0, : ]
+        self.omega = solution.y[1, :]
+        self.alpha = -(self.g / self.r) * np.sin(self.theta)
 
         return self.t, self.theta, self.omega
 
@@ -116,15 +141,16 @@ class SimplePendulum:
         Calculate kinetic, potential, and total energy.
 
         Returns: KE, PE, Total Energy (assuming mass = 1)
+        assuming point mass
         """
         if self.theta is None:
             raise ValueError("Must call solve() first")
 
         # Kinetic energy: using standard angular motion kinetic
-        KE = 0.5 * self.r ** 2 * self.omega ** 2
+        KE = 0.5*self.m * self.r ** 2 * self.omega ** 2
 
         # Potential energy: m g h = m g r (1 - cos(θ))
-        PE = self.g * self.r * (1 - np.cos(self.theta))
+        PE = self.m * self.g * self.r * (1 - np.cos(self.theta))
 
         total = KE + PE
 
