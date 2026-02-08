@@ -85,7 +85,7 @@ def plot_summary(sol: dict) -> plt.Figure:
 
 def animate_solution(sol: dict, interval_ms: int = 10, trail_frames: int = 50) -> FuncAnimation:
     """
-    Animate the motion for a solution dict with a running timer.
+    Animate the motion of the kiiker for a solution dict with a running timer.
 
     Parameters
     ----------
