@@ -41,7 +41,7 @@ def control_constant_length(theta, omega, r_min, r_max):
     """
     return r_max
 
-def control_velocity_tanh(theta, omega, r_min, r_max, omega_ref=0.3):
+def control_velocity_tanh(theta, omega, r_min, r_max, omega_ref=1):
     """
     Velocity-based pumping:
     - High |omega| -> stand (r_min)
@@ -50,46 +50,46 @@ def control_velocity_tanh(theta, omega, r_min, r_max, omega_ref=0.3):
     s = np.tanh(abs(omega) / omega_ref)  # in [0, 1)
     return r_max - (r_max - r_min) * s
 
-# def control_stand_bottom_squat_top(theta, omega, r_min, r_max):
-#     """
-#     Instantaneous pumping control.
-#
-#     Physics:
-#     - Bottom of swing (theta ≈ 0): stand up → shorten pendulum
-#     - Top of swing (|theta| large): squat → lengthen pendulum
-#
-#     This breaks time-reversal symmetry and injects energy.
-#     """
-#     if np.cos(theta) > 0:
-#         # Bottom half of swing
-#         return r_min
-#     else:
-#         # Top half of swing
-#         return r_max
-
-
 def control_stand_bottom_squat_top(theta, omega, r_min, r_max):
     """
-    Optimized pumping control:
-    - Stand (r_min) near the bottom to perform work against centrifugal force.
-    - Squat (r_max) ONLY at the peaks to reset with minimal energy loss.
+    Instantaneous pumping control.
+
+    Physics:
+    - Bottom of swing (theta ≈ 0): stand up → shorten pendulum
+    - Top of swing (|theta| large): squat → lengthen pendulum
+
+    This breaks time-reversal symmetry and injects energy.
     """
-    # Detect the peak: velocity is nearly zero
-    is_at_peak = abs(omega) < 0.1
-
-    # Detect the power stroke: near the bottom and moving fast
-    # Increasing the cosine threshold (0.85 ~ 30 degrees) focuses the work
-    # where centrifugal force is highest.
-    is_near_bottom = np.cos(theta) > 0.85
-
-    if is_near_bottom:
+    if np.cos(theta) > 0:
+        # Bottom half of swing
         return r_min
-    elif is_at_peak:
+    else:
+        # Top half of swing
         return r_max
 
-    # Hold standing position while climbing to maintain the energy gain
-    # until the peak is reached for a reset.
-    return r_min
+
+# def control_stand_bottom_squat_top(theta, omega, r_min, r_max):
+#     """
+#     Optimized pumping control:
+#     - Stand (r_min) near the bottom to perform work against centrifugal force.
+#     - Squat (r_max) ONLY at the peaks to reset with minimal energy loss.
+#     """
+#     # Detect the peak: velocity is nearly zero
+#     is_at_peak = abs(omega) < 0.1
+#
+#     # Detect the power stroke: near the bottom and moving fast
+#     # Increasing the cosine threshold (0.85 ~ 30 degrees) focuses the work
+#     # where centrifugal force is highest.
+#     is_near_bottom = np.cos(theta) > 0.85
+#
+#     if is_near_bottom:
+#         return r_min
+#     elif is_at_peak:
+#         return r_max
+#
+#     # Hold standing position while climbing to maintain the energy gain
+#     # until the peak is reached for a reset.
+#     return r_min
 
 # ===============================================
 # KiiKing Model
