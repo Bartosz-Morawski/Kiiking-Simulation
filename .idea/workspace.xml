@@ -4,16 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c402c558-a450-4fca-a513-079cb9e00121" name="Changes" comment="currently&#10;- functioning simple pendulum class  &#10;- functioning animation, general plots">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/controls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/plotting.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/run_experiment.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/SwingsAndRoundabouts.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SwingsAndRoundabouts.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    <list default="true" id="c402c558-a450-4fca-a513-079cb9e00121" name="Changes" comment="Pushed new scripts that use old code, implementing the r(t) function and producing a realistic animation">
+      <change beforePath="$PROJECT_DIR$/Scripts/plotting.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/plotting.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +34,7 @@
 }</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
-    "url": "https://github.com/SecondStarToTheLeft/SwingsAndRoundabouts",
+    "url": "https://github.com/Bartosz-Morawski/Kiiking-Simulation",
     "accountId": "0ee7b8d0-2048-462f-8ffc-8bc735059222"
   }
 }]]></component>
@@ -77,7 +69,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "bartosz",
+    "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -122,7 +114,7 @@
       <workItem from="1769440468596" duration="61067000" />
       <workItem from="1770379199611" duration="13000" />
       <workItem from="1770379303197" duration="24242000" />
-      <workItem from="1770586073809" duration="4752000" />
+      <workItem from="1770586073809" duration="6301000" />
     </task>
     <task id="LOCAL-00001" summary="currently&#10;- functioning simple pendulum class  &#10;- functioning animation, general plots">
       <option name="closed" value="true" />
@@ -140,7 +132,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770039046917</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Pushed new scripts that use old code, implementing the r(t) function and producing a realistic animation">
+      <option name="closed" value="true" />
+      <created>1770591125635</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1770591125635</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -159,7 +159,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="currently&#10;- functioning simple pendulum class  &#10;- functioning animation, general plots" />
-    <option name="LAST_COMMIT_MESSAGE" value="currently&#10;- functioning simple pendulum class  &#10;- functioning animation, general plots" />
+    <MESSAGE value="Pushed new scripts that use old code, implementing the r(t) function and producing a realistic animation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pushed new scripts that use old code, implementing the r(t) function and producing a realistic animation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -185,7 +186,7 @@
     <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$main.coverage" NAME="main Coverage Results" MODIFIED="1770587127385" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$plotter.coverage" NAME="plotter Coverage Results" MODIFIED="1770557525361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$.coverage" NAME=" Coverage Results" MODIFIED="1769784091284" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$run_experiment.coverage" NAME="run_experiment Coverage Results" MODIFIED="1770590497246" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Scripts" />
+    <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$run_experiment.coverage" NAME="run_experiment Coverage Results" MODIFIED="1770592368621" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Scripts" />
     <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$solver.coverage" NAME="solver Coverage Results" MODIFIED="1769874644133" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$KiikingModel_r_as_state.coverage" NAME="KiikingModel_r_as_state Coverage Results" MODIFIED="1770557977634" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

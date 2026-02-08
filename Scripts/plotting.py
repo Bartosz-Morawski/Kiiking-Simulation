@@ -85,7 +85,7 @@ def plot_summary(sol: dict) -> plt.Figure:
 
 def animate_solution(sol: dict, interval_ms: int = 10, trail_frames: int = 50) -> FuncAnimation:
     """
-    Animate the motion for a solution dict.
+    Animate the motion for a solution dict with a running timer.
 
     Parameters
     ----------
@@ -103,27 +103,45 @@ def animate_solution(sol: dict, interval_ms: int = 10, trail_frames: int = 50) -
     """
     x, y = cartesian_from_solution(sol)
     r = sol["r"]
+    t = sol["t"]
 
     fig, ax = plt.subplots(figsize=(6, 6))
     rmax = float(np.max(r))
+
+    # Set up the plot limits and aspect
     ax.set_xlim(-1.3 * rmax, 1.3 * rmax)
     ax.set_ylim(-1.3 * rmax, 1.3 * rmax)
     ax.set_aspect("equal")
-    ax.invert_yaxis()
+    ax.invert_yaxis()  # +x is down
 
+    # Draw the pivot
     ax.plot(0, 0, "ko", markersize=10)
+
+    # Initialize plot objects: rod, trail, and the timer text
     rod, = ax.plot([], [], "o-", lw=3)
     trail, = ax.plot([], [], "-", lw=1, alpha=0.4)
+
+    # Place timer in top-left corner (0.05, 0.95 relative to axes)
+    time_text = ax.text(0.05, 0.95, "", transform=ax.transAxes, fontsize=12,
+                        verticalalignment='top', bbox=dict(boxstyle='round', facecolor='white', alpha=0.5))
 
     def init():
         rod.set_data([], [])
         trail.set_data([], [])
-        return rod, trail
+        time_text.set_text("")
+        return rod, trail, time_text
 
     def update(i):
+        # Update geometry
         rod.set_data([0, y[i]], [0, x[i]])
+
+        # Update trail
         j0 = max(0, i - trail_frames)
         trail.set_data(y[j0:i + 1], x[j0:i + 1])
-        return rod, trail
 
-    return FuncAnimation(fig, update, init_func=init, frames=len(sol["t"]), interval=interval_ms, blit=True)
+        # Update timer
+        time_text.set_text(f"t = {t[i]:.2f} s")
+
+        return rod, trail, time_text
+
+    return FuncAnimation(fig, update, init_func=init, frames=len(t), interval=interval_ms, blit=True)
