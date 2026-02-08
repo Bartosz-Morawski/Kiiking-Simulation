@@ -5,13 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c402c558-a450-4fca-a513-079cb9e00121" name="Changes" comment="currently&#10;- functioning simple pendulum class  &#10;- functioning animation, general plots">
-      <change afterPath="$PROJECT_DIR$/KiikingModel_2states.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KiikingModel_r_as_state.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KiikingPlotter.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/controls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/plotting.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scripts/run_experiment.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/SwingsAndRoundabouts.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SwingsAndRoundabouts.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pendulum.py" beforeDir="false" afterPath="$PROJECT_DIR$/pendulum.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/plotter.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,12 +40,12 @@
     &quot;assignee&quot;: &quot;SecondStarToTheLeft&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/SecondStarToTheLeft/SwingsAndRoundaboutss.git&quot;,
-    &quot;accountId&quot;: &quot;009675ad-3eb3-405c-9b93-92b527d57704&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/SecondStarToTheLeft/SwingsAndRoundabouts",
+    "accountId": "0ee7b8d0-2048-462f-8ffc-8bc735059222"
   }
-}</component>
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -57,6 +59,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python tests.Python tests in main.py.executor": "Run",
     "Python.KiikingModel.executor": "Run",
@@ -66,19 +69,22 @@
     "Python.main.executor": "Run",
     "Python.pendulum.executor": "Run",
     "Python.plotter.executor": "Run",
+    "Python.run_experiment.executor": "Run",
     "Python.solver.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "bartosz",
     "junie.onboarding.icon.badge.shown": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.keymap",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
     "settings.editor.splitter.proportion": "0.40189874",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
@@ -90,11 +96,16 @@
     ]
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Scripts" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-c7e53b3be11b-JavaScript-PY-253.28294.336" />
-        <option value="bundled-python-sdk-0978a7220b69-9867c7d4c0a4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.28294.336" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-PY-252.27397.106" />
+        <option value="bundled-python-sdk-4e2b1448bda8-9a97661f3031-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.27397.106" />
       </set>
     </attachedChunks>
   </component>
@@ -111,6 +122,7 @@
       <workItem from="1769440468596" duration="61067000" />
       <workItem from="1770379199611" duration="13000" />
       <workItem from="1770379303197" duration="24242000" />
+      <workItem from="1770586073809" duration="4752000" />
     </task>
     <task id="LOCAL-00001" summary="currently&#10;- functioning simple pendulum class  &#10;- functioning animation, general plots">
       <option name="closed" value="true" />
@@ -166,14 +178,15 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$plotter.coverage" NAME="plotter Coverage Results" MODIFIED="1770557525361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$KiikingModel_r_as_state.coverage" NAME="KiikingModel_r_as_state Coverage Results" MODIFIED="1770557977634" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$.coverage" NAME=" Coverage Results" MODIFIED="1769784091284" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$KiikingModel_2states.coverage" NAME="KiikingModel_2states Coverage Results" MODIFIED="1770558583388" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$KiikingPlotter.coverage" NAME="KiikingPlotter Coverage Results" MODIFIED="1770511967700" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$solver.coverage" NAME="solver Coverage Results" MODIFIED="1769874644133" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$main.coverage" NAME="main Coverage Results" MODIFIED="1770559767904" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$KiikingModel.coverage" NAME="KiikingModel Coverage Results" MODIFIED="1770551313632" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$pendulum.coverage" NAME="pendulum Coverage Results" MODIFIED="1769879687440" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$KiikingModel.coverage" NAME="KiikingModel Coverage Results" MODIFIED="1770551313632" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$main.coverage" NAME="main Coverage Results" MODIFIED="1770587127385" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$plotter.coverage" NAME="plotter Coverage Results" MODIFIED="1770557525361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$.coverage" NAME=" Coverage Results" MODIFIED="1769784091284" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$run_experiment.coverage" NAME="run_experiment Coverage Results" MODIFIED="1770590497246" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Scripts" />
+    <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$solver.coverage" NAME="solver Coverage Results" MODIFIED="1769874644133" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SwingsAndRoundabouts$KiikingModel_r_as_state.coverage" NAME="KiikingModel_r_as_state Coverage Results" MODIFIED="1770557977634" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -22,6 +22,7 @@ TODO ask about use of AI for refactoring etc, or is this an absolute ban
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 
 #I comment out one of the two models below to vary which is being used
 from KiikingModel_2states import *
@@ -72,6 +73,9 @@ from plotter import plot_motion_2d, phase_plane_plot, plot_quick_summary, plot_v
 # # TODO expect this to be stationary, position seems to, but forces are acting up (small errors 1e-9)
 # # 3. released at bottom, Stationary as expected,
 # #simple(theta_init=0, omega_init=0)
+
+# Command required for plots and animations to load
+matplotlib.use("TkAgg")
 
 animation_test_model = KiikingModel(control_stand_bottom_squat_top, omega0=2)
 t, theta, omega = animation_test_model.solve(time_range=(0,60))
