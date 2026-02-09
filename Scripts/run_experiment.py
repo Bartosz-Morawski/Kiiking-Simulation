@@ -15,8 +15,8 @@ def main():
     m = 70.0
 
     # --- Control parameters ---
-    # r = (r_arm - 0.895) - 0.145 * tanh(k * sin(theta) * omega)
-    r_arm = 7.0 # took 1 minute 40 seconds in video
+    # r = (r_arm - 0.895) - 0.145 * tanh(k * theta * omega)
+    r_arm = 7.15 # took 1 minute 40 seconds in video
     r0 = r_arm - 0.895 # Number determined by Noah
     A = 0.145 # Constant determining change in centre of mass
     k = 1.0
@@ -28,7 +28,7 @@ def main():
     partials_args = dict(r0=r0, A=A, k=k, r_min=r_min, r_max=r_max)
 
     # --- Initial conditions ---
-    theta0 = 0.78 # approx pi/4 big push
+    theta0 = 0.7 # approx pi/4 big push
     omega0 = 0.0 # starts from rest
 
     sol = solve_kiiking_2state(

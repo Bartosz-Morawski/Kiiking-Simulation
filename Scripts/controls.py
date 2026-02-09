@@ -52,7 +52,8 @@ def r_tanh_theta_omega(
     Implements:
         r(θ, ω) = r0 - A * tanh(k sin(θ) ω)
     """
-    z = k * np.sin(theta) * omega
+    sign_omega = np.tanh(100*omega)
+    z = k * np.sin(theta) * sign_omega
     r = r0 - A * np.tanh(z)
     return float(np.clip(r, r_min, r_max))
 
@@ -102,8 +103,10 @@ def partials_tanh_theta_omega(
 
     This function enforces that: if clipping activates, derivatives are set to 0.
     """
-    z = k * theta * omega
+    sign_omega = np.tanh(100 * omega)
+    z = k * theta * sign_omega
     sech2 = 1.0 / (np.cosh(z) ** 2)
+    sech2_2 = 1.0 / (np.cosh(sign_omega) ** 2)
 
     r_unclipped = r0 - A * np.tanh(z)
     r = float(np.clip(r_unclipped, r_min, r_max))
@@ -112,6 +115,6 @@ def partials_tanh_theta_omega(
         # saturated: r no longer changes with theta/omega
         return r, 0.0, 0.0
 
-    dr_dtheta = float(-A * sech2 * k * omega) #CHANGED
-    dr_domega = float(-A * sech2 * k * theta) #CHANGED
+    dr_dtheta = float(-A * sech2 * k * sign_omega) #CHANGED
+    dr_domega = float(-A * sech2 * k * theta * sech2_2) #CHANGED
     return r, dr_dtheta, dr_domega
