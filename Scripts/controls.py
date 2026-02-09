@@ -112,6 +112,6 @@ def partials_tanh_theta_omega(
         # saturated: r no longer changes with theta/omega
         return r, 0.0, 0.0
 
-    dr_dtheta = float(-A * sech2 * k * np.cos(theta) * omega) #CHANGED
-    dr_domega = float(-A * sech2 * k * np.sin(theta)) #CHANGED
+    dr_dtheta = float(-A * sech2 * k * omega) #CHANGED
+    dr_domega = float(-A * sech2 * k * theta) #CHANGED
     return r, dr_dtheta, dr_domega
