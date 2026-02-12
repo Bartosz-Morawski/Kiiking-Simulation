@@ -19,7 +19,7 @@ def main():
     r_arm = 7.15 # took 1 minute 40 seconds in video
     r0 = r_arm - 0.895 # Number determined by Noah
     A = 0.145 # Constant determining change in centre of mass
-    k = 1.0
+    k = 0.5
 
     # Physical posture limits
     r_min = r_arm - 1.04   # standing = shorter

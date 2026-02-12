@@ -1,12 +1,6 @@
 """
 Control laws for Kiiking-style variable-length pendulum models.
-
-This module provides r(theta, omega) and its partial derivatives with respect to
-theta and omega. These derivatives are used to compute the angular acceleration
-from the polar-coordinate equations of motion.
-
-All functions here are designed for use with the two-state constrained model:
-    r = f(theta, omega),  omega = dtheta/dt
+Optimized for IMMEDIATE power generation (High Sensitivity).
 """
 
 from __future__ import annotations
@@ -23,44 +17,23 @@ def r_tanh_theta_omega(
     r_max: float,
 ) -> float:
     """
-    Compute the effective length r(θ, ω) using a "soft-sign" control strategy.
-
-    This strategy uses raw theta (for first-swing optimization) and a steep
-    tanh(C*omega) function to approximate a sign switch, forcing the athlete
-    to squat/stand aggressively even at low speeds.
-
-    Parameters
-    ----------
-    theta
-        Angle θ in radians.
-    omega
-        Angular velocity ω = dθ/dt in rad/s.
-    r0
-        Baseline length (midpoint).
-        For your formula, r0 = r_arm - 0.895.
-    A
-        Amplitude of length change (meters).
-        For your formula, A = 0.145.
-    k
-        Gain controlling the coupling strength.
-    r_min, r_max
-        Physical limits on r (standing/squatting bounds).
-
-    Returns
-    -------
-    r
-        Effective length (meters), clipped to [r_min, r_max].
-
-    Notes
-    -----
-    Implements:
-        r(θ, ω) = r0 - A * tanh( z )
-        where z = k * theta * tanh(C * omega)
-        and C = 100 (hardcoded steepness factor).
+    Compute effective length.
+    Uses 'Double Saturation' to force full amplitude even at small angles.
     """
-    C = 5
-    sign_omega = np.tanh(C * omega)
-    z = k * theta * sign_omega
+    # Sensitivity gains
+    C_theta = 5.0  # High sensitivity to angle
+    C_omega = 5.0  # High sensitivity to speed
+
+    # 1. Detect if we are "Away from Bottom" (Saturated)
+    # This turns into +/- 1 very quickly, fixing the "weak start" issue
+    angle_trigger = np.tanh(C_theta * theta)
+
+    # 2. Detect direction of motion
+    speed_trigger = np.tanh(C_omega * omega)
+
+    # 3. Combine triggers
+    z = k * angle_trigger * speed_trigger
+
     r = r0 - A * np.tanh(z)
     return float(np.clip(r, r_min, r_max))
 
@@ -75,56 +48,44 @@ def partials_tanh_theta_omega(
     r_max: float,
 ) -> tuple[float, float, float]:
     """
-    Compute r and its partial derivatives for the soft-sign control law.
-
-    Parameters
-    ----------
-    theta
-        Angle θ in radians.
-    omega
-        Angular velocity ω in rad/s.
-    r0, A, k, r_min, r_max
-        As in :func:`r_tanh_theta_omega`.
-
-    Returns
-    -------
-    r
-        Effective length (meters), clipped to [r_min, r_max].
-    dr_dtheta
-        Partial derivative ∂r/∂θ (meters per radian).
-    dr_domega
-        Partial derivative ∂r/∂ω (meters per (rad/s)).
-
-    Notes
-    -----
-    For r = r0 - A * tanh(z), where z = k * theta * tanh(C * omega):
-
-        ∂r/∂θ = -A * sech^2(z) * [k * tanh(C * omega)]
-        ∂r/∂ω = -A * sech^2(z) * [k * theta * C * sech^2(C * omega)]
-
-    This includes the chain rule factor 'C' for the inner tanh, which ensures
-    the inertial terms are calculated correctly by the solver.
+    Compute derivatives with Double Chain Rule (Theta and Omega).
     """
-    C = 5
+    C_theta = 5.0
+    C_omega = 5.0
 
-    # Precompute inner terms
-    tanh_C_om = np.tanh(C * omega)
-    sech2_C_om = 1.0 - tanh_C_om**2  # Identity: sech^2(x) = 1 - tanh^2(x)
+    # --- Precompute Inner Terms ---
 
-    z = k * theta * tanh_C_om
+    # Angle terms
+    tanh_C_th = np.tanh(C_theta * theta)
+    sech2_C_th = 1.0 - tanh_C_th**2
+
+    # Speed terms
+    tanh_C_om = np.tanh(C_omega * omega)
+    sech2_C_om = 1.0 - tanh_C_om**2
+
+    # --- Outer Control ---
+    z = k * tanh_C_th * tanh_C_om
 
     tanh_z = np.tanh(z)
     sech2_z = 1.0 - tanh_z**2
 
+    # --- Calculate r ---
     r_unclipped = r0 - A * tanh_z
     r = float(np.clip(r_unclipped, r_min, r_max))
 
     if r != r_unclipped:
-        # saturated: r no longer changes with theta/omega
         return r, 0.0, 0.0
 
-    # Chain rule implementation
-    dr_dtheta = float(-A * sech2_z * k * tanh_C_om)
-    dr_domega = float(-A * sech2_z * k * theta * C * sech2_C_om)
+    # --- Derivatives (Chain Rule) ---
+
+    # 1. dr/dtheta
+    # Inner derivative: d/dtheta [tanh(C_th * theta)] = C_th * sech^2(C_th * theta)
+    dz_dtheta = k * tanh_C_om * (C_theta * sech2_C_th)
+    dr_dtheta = float(-A * sech2_z * dz_dtheta)
+
+    # 2. dr/domega
+    # Inner derivative: d/domega [tanh(C_om * omega)] = C_om * sech^2(C_om * omega)
+    dz_domega = k * tanh_C_th * (C_omega * sech2_C_om)
+    dr_domega = float(-A * sech2_z * dz_domega)
 
     return r, dr_dtheta, dr_domega
